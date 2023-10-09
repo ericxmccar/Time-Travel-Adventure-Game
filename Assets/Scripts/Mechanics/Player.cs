@@ -54,6 +54,19 @@ public class Player : MonoBehaviour
         movement = movementValue.Get<float>();
     }
 
+    void OnDown(InputValue movementValue)
+    {
+        float val = movementValue.Get<float>();
+        if (val == 1)
+        {
+
+        }
+        else
+        {
+
+        }
+    }
+
     void OnJump(InputValue movementValue)
     {
         float val = movementValue.Get<float>();
