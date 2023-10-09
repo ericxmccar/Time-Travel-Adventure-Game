@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(TimeChangeable))]
 public class Enemy : MonoBehaviour
 {
     #region Enemy Status
@@ -13,7 +14,7 @@ public class Enemy : MonoBehaviour
 
     #region Enemy Movement
     protected Vector3 moveVelocity;
-    protected float moveSpeedMultiplier;
+    protected TimeChangeable timeChangeable;
     #endregion
 
     #region Unity
@@ -26,9 +27,9 @@ public class Enemy : MonoBehaviour
         hp = maxHp;
 
         moveVelocity = Vector3.zero;
-        moveSpeedMultiplier = 1f;
 
         rb = GetComponent<Rigidbody2D>();
+        timeChangeable = GetComponent<TimeChangeable>();
     }
 
     public virtual void FixedUpdate()
@@ -57,7 +58,7 @@ public class Enemy : MonoBehaviour
     protected virtual void UpdateVelocity()
     {
         Vector3 currVelocity = rb.velocity;
-        rb.velocity = moveVelocity * moveSpeedMultiplier;
+        rb.velocity = moveVelocity * timeChangeable.timeMultiplier;
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D col)
