@@ -5,11 +5,12 @@ using UnityEngine;
 public class ItemPickup : MonoBehaviour
 {
     [SerializeField] Item item;
+
     void OnCollisionEnter2D(Collision2D col) 
     {
-        Player Play = col.gameObject.GetComponent<Player>();
-        if (Play != null) {
-            Play.AddItem(item);
+        Player play = col.gameObject.GetComponent<Player>();
+        if (play != null) {
+            play.AddItem(item);
             Destroy(this.gameObject);
         }
     }

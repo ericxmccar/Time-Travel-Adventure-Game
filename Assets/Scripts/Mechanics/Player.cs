@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] protected int maxHp;
     [SerializeField] Item heldItem;
     [SerializeField] List<Item> inventory;
-    int hp;
+    [SerializeField] int hp;
     #endregion
 
     #region Player Movement
@@ -36,17 +36,17 @@ public class Player : MonoBehaviour
 
         currentJumpVelocity = initialJumpVelocity;
         jumpStep = initialJumpVelocity / maxJumpTime;
-
-        rb = GetComponent<Rigidbody2D>();
+        
         movement = 0f;
         jumpIsHeld = false;
         canJump = false;
+
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void FixedUpdate()
     {
         UpdateVelocity();
-
     }
 
     void OnMove(InputValue movementValue)
@@ -137,5 +137,19 @@ public class Player : MonoBehaviour
     public void AddItem(Item item)
     {
         inventory.Add(item);
+    }
+    
+    public void TakeDmg(int dmg)
+    {
+        hp -= dmg;
+        if (hp <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        // TODO
     }
 }
