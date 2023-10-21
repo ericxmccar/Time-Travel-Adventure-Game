@@ -287,6 +287,10 @@ MonoBehaviour:
   maxHp: 1
   dmgOnTouch: 1
   drops: []
+  FallingVelocity: 2
+  LiftingVelocity: 2
+  ActivationDistance: 1
+  Seconds: 10000
 --- !u!1 &480637844
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,6 +610,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5354835524312416233, guid: 8c297265c4d774be6890af621b7f0205, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5354835524312416233, guid: 8c297265c4d774be6890af621b7f0205, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
