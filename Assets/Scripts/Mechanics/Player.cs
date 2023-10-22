@@ -11,16 +11,22 @@ public class Player : MonoBehaviour
     [SerializeField] List<Item> inventory;
     int hp;
     #endregion
-
     #region Player Movement
     [SerializeField] protected float runSpeed;
     [SerializeField] protected float maxJumpTime;
     [SerializeField] protected float initialJumpVelocity;
     [SerializeField] protected float fallSpeedMultiplier;
+    private Vector2 movementDirection;
     float currentJumpVelocity;
+    float movementVertical;
     float movement;
     bool jumpIsHeld;
     bool canJump;
+    bool isDashing;
+    bool canDash; 
+    private float dashCooldown = 0.5f; 
+    [SerializeField] protected float dashSpeed = 25f; 
+    [SerializeField] protected float dashTime = 1f; 
     protected float jumpStep; // Calculated on Start
     #endregion
 
@@ -37,10 +43,13 @@ public class Player : MonoBehaviour
         currentJumpVelocity = initialJumpVelocity;
         jumpStep = initialJumpVelocity / maxJumpTime;
 
+
         rb = GetComponent<Rigidbody2D>();
         movement = 0f;
         jumpIsHeld = false;
         canJump = false;
+        canDash = true; 
+        isDashing = false;
     }
 
     void FixedUpdate()
@@ -52,6 +61,7 @@ public class Player : MonoBehaviour
     void OnMove(InputValue movementValue)
     {
         movement = movementValue.Get<float>();
+        movementDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
     }
 
     void OnJump(InputValue movementValue)
@@ -64,6 +74,7 @@ public class Player : MonoBehaviour
             {
                 jumpIsHeld = true;
                 canJump = false;
+                
             }
         }
         // Jump was released
@@ -75,12 +86,26 @@ public class Player : MonoBehaviour
 
     void OnDash(InputValue movementValue)
     {
+        Debug.Log("calling Dash");
         float val = movementValue.Get<float>();
         // Dash was pressed down
         if (val == 1)
         {
-            // TODO
+            if (canDash) 
+            {
+                canDash = false;
+                isDashing = true; 
+                StartCoroutine(dashCooldownFeature());
+            }
+          
         }
+    }
+
+    IEnumerator dashCooldownFeature() 
+    {
+            yield return new WaitForSeconds(dashCooldown);
+            canDash = true; 
+            isDashing = false; 
     }
 
     void UpdateVelocity()
@@ -90,7 +115,14 @@ public class Player : MonoBehaviour
         float newHorizontalVelocity = movement * runSpeed;
 
         float newVerticalVelocity = rb.velocity.y;
-        if (jumpIsHeld && currentJumpVelocity > 0f)
+
+        if (isDashing && movement != 0) 
+        {
+            newHorizontalVelocity = dashSpeed * movement; 
+            newVerticalVelocity = dashSpeed * movementDirection.y;   
+        }
+
+        else if (jumpIsHeld && currentJumpVelocity > 0f)
         {
             newVerticalVelocity = currentJumpVelocity;
             currentJumpVelocity -= jumpStep;
