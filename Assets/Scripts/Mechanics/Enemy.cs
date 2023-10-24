@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     #endregion
 
     #region Enemy Movement
+    [SerializeField] protected bool hasGravity;
     protected Vector3 moveVelocity;
     protected TimeChangeable timeChangeable;
     #endregion
@@ -57,8 +58,15 @@ public class Enemy : MonoBehaviour
 
     protected virtual void UpdateVelocity()
     {
-        Vector3 currVelocity = rb.velocity;
-        rb.velocity = moveVelocity * timeChangeable.timeMultiplier;
+        if (hasGravity)
+        {
+            Vector3 currVelocity = rb.velocity;
+            rb.velocity = new Vector3(moveVelocity.x, currVelocity.y, currVelocity.z) * timeChangeable.timeMultiplier;
+        }
+        else
+        {
+            rb.velocity = moveVelocity * timeChangeable.timeMultiplier;
+        }
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D col)
