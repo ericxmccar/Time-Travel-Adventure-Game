@@ -232,7 +232,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 5
 --- !u!61 &259677112
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -285,12 +285,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 1
-  dmgOnTouch: 1
+  dmgOnTouch: 999
   drops: []
+  hasGravity: 0
   FallingVelocity: 2
   LiftingVelocity: 2
   ActivationDistance: 1
   Seconds: 10000
+  platform: {fileID: 480637844}
 --- !u!1 &480637844
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +373,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 5
 --- !u!212 &480637848
 SpriteRenderer:
   m_ObjectHideFlags: 0

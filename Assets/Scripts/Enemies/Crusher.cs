@@ -8,8 +8,11 @@ public class Crusher : Enemy
     [SerializeField] float LiftingVelocity;
     [SerializeField] float ActivationDistance;
     [SerializeField] float Seconds;
+    [SerializeField] GameObject platform;
     private float position;
     private GameObject player;
+    private Vector3 platformOffset;
+
     private bool goingUp; 
 
     public override void Start()
@@ -17,6 +20,7 @@ public class Crusher : Enemy
         base.Start();
         position = this.transform.position.y;
         player = GameObject.FindWithTag("Player");
+        platformOffset = platform.transform.localPosition;
         goingUp = false;
     }
     public override void FixedUpdate()
@@ -34,13 +38,14 @@ public class Crusher : Enemy
         if (this.transform.position.y < -1.2) {
             Invoke("Up", 2.0f);
         }
+        platform.transform.localPosition = platformOffset;
 
         base.FixedUpdate();
     }
     public void Up() 
     {
-    goingUp = true;
-    moveVelocity = Vector3.up * LiftingVelocity;
+        goingUp = true;
+        moveVelocity = Vector3.up * LiftingVelocity;
     }
     IEnumerator WaitCoroutine() {
         yield return new WaitForSeconds(Seconds);

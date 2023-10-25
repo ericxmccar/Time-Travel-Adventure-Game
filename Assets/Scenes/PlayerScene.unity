@@ -273,6 +273,7 @@ MonoBehaviour:
   maxHp: 1
   dmgOnTouch: 1
   drops: []
+  hasGravity: 1
 --- !u!114 &259677114
 MonoBehaviour:
   m_ObjectHideFlags: 0
