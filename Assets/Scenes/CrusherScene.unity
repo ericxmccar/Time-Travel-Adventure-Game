@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 1
-  dmgOnTouch: 1
+  dmgOnTouch: 999
   drops: []
   hasGravity: 0
   FallingVelocity: 2
