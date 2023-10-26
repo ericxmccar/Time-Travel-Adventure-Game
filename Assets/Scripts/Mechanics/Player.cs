@@ -17,8 +17,14 @@ public class Player : MonoBehaviour
     [SerializeField] protected float maxJumpTime;
     [SerializeField] protected float initialJumpVelocity;
     [SerializeField] protected float fallSpeedMultiplier;
+    [SerializeField] protected float dashDuration;
+    [SerializeField] protected float dashSpeed;
+    [SerializeField] protected float dashCooldown;
     float currentJumpVelocity;
     float movement;
+    float dashY;
+    bool canDash;
+    bool isDashing;
     bool jumpIsHeld;
     bool canJump;
     protected float jumpStep; // Calculated on Start
@@ -38,6 +44,9 @@ public class Player : MonoBehaviour
         jumpStep = initialJumpVelocity / maxJumpTime;
         
         movement = 0f;
+        dashY = 0f;
+        canDash = true;
+        isDashing = false;
         jumpIsHeld = false;
         canJump = false;
 
@@ -59,11 +68,11 @@ public class Player : MonoBehaviour
         float val = movementValue.Get<float>();
         if (val == 1)
         {
-
+            dashY -= 1f;
         }
         else
         {
-
+            dashY += 1f;
         }
     }
 
@@ -78,11 +87,13 @@ public class Player : MonoBehaviour
                 jumpIsHeld = true;
                 canJump = false;
             }
+            dashY += 1f;
         }
         // Jump was released
         else 
         {
             jumpIsHeld = false;
+            dashY -= 1f;
         }
     }
 
@@ -92,13 +103,20 @@ public class Player : MonoBehaviour
         // Dash was pressed down
         if (val == 1)
         {
-            // TODO
+            if (canDash)
+            {
+                StartDash();
+                Invoke("EndDash", dashDuration);
+                Invoke("RestoreDash", dashCooldown);
+            }
         }
     }
 
     void UpdateVelocity()
     {
-        Vector3 currVelocity = rb.velocity;
+        if (isDashing) return;
+
+        Vector2 currVelocity = rb.velocity;
 
         float newHorizontalVelocity = movement * runSpeed;
 
@@ -122,7 +140,25 @@ public class Player : MonoBehaviour
                 currentJumpVelocity = initialJumpVelocity;
             }
         }
-        rb.velocity = new Vector3(newHorizontalVelocity, newVerticalVelocity, currVelocity.z);
+        rb.velocity = new Vector2(newHorizontalVelocity, newVerticalVelocity);
+    }
+
+    void StartDash()
+    {
+        canDash = false;
+        isDashing = true;
+        rb.velocity = new Vector2(movement, dashY).normalized * dashSpeed;
+    }
+
+    void EndDash()
+    {
+        isDashing = false;
+        rb.velocity = Vector2.zero;
+    }
+    
+    void RestoreDash()
+    {
+        canDash = true;
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -144,6 +180,7 @@ public class Player : MonoBehaviour
         if (wasFalling && collidedVertically)
         {
             canJump = true;
+            canDash = true;
         }
     }
 

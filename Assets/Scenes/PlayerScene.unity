@@ -273,6 +273,7 @@ MonoBehaviour:
   maxHp: 1
   dmgOnTouch: 1
   drops: []
+  hasGravity: 1
 --- !u!114 &259677114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,7 +367,7 @@ Transform:
   m_GameObject: {fileID: 637962773}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.0128, z: 0}
-  m_LocalScale: {x: 2, y: 2.0256, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1854605962}
@@ -382,7 +383,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -546,6 +547,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5354835524312416229, guid: 8c297265c4d774be6890af621b7f0205, type: 3}
+      propertyPath: dashCooldown
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5354835524312416229, guid: 8c297265c4d774be6890af621b7f0205, type: 3}
+      propertyPath: dashDuration
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 5354835524312416231, guid: 8c297265c4d774be6890af621b7f0205, type: 3}
       propertyPath: m_RootOrder
       value: 0

@@ -150,10 +150,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 3
   heldItem: {fileID: 0}
+  inventory: []
+  hp: 0
   runSpeed: 5
   maxJumpTime: 30
   initialJumpVelocity: 10
   fallSpeedMultiplier: 2
+  dashDuration: 0.5
+  dashSpeed: 20
 --- !u!114 &5354835524312416228
 MonoBehaviour:
   m_ObjectHideFlags: 0
