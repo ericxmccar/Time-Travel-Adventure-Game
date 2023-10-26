@@ -41,7 +41,7 @@ public class Enemy : MonoBehaviour
     public virtual void TakeDmg(int dmg)
     {
         hp -= dmg;
-        if (dmg <= 0)
+        if (hp <= 0)
         {
             Die();
         }

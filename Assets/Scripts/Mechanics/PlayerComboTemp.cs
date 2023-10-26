@@ -14,8 +14,8 @@ public class PlayerComboTemp : MonoBehaviour
     private GameObject meleeHitBoxGameObject;
     [SerializeField] [Tooltip("The amount of knock back applied on the third hit.")]
     private float knockBack = 0;
-    [SerializeField] [Tooltip("The amount of time to wait before the next hit.")]
-    private float comboResetCoolDown = 0;
+    [SerializeField] [Tooltip("The amount of time to without attacking before combo resets.")]
+    private float comboResetCoolDown = 1;
     [SerializeField] [Tooltip("The amount of time to wait before the next hit.")]
     private float[] coolDown = new float[3];
     #endregion
@@ -37,31 +37,42 @@ public class PlayerComboTemp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        countCoolDowns(Time.deltaTime);
     }
 
-    void DealDamage(Enemy enemey, float damage)
+    void countCoolDowns(float deltaTime)
     /// <summary>
-    /// Subtract damage from enemey.hp
+    /// Resets combonum to 1
     /// </summary>
     {
-        // this might be better if we do it in enemy?
+        attackCoolDownCount = Mathf.Max(attackCoolDownCount - deltaTime, 0);
+        resetCoolDownCount = Mathf.Max(resetCoolDownCount - deltaTime, 0);
+        if (resetCoolDownCount <= 0) 
+        {
+            comboNum = 0;
+        }
     }
 
     void FistCombo(Collider2D other)
     /// <summary>
-    /// Will alternate between 0,1,2
+    /// 
     /// </summary>
     {
-        comboNum = (comboNum + 1) % 3;
-        // Debug.Log("combo number: " + comboNum);
-        if (comboNum == 2) 
-        { // apply knockback
-            Vector2 knockbackForce = new Vector2(knockBack * 100 * this.transform.localScale.x, 0);
-            Rigidbody2D otherRb = other.gameObject.GetComponent<Rigidbody2D>();
-            otherRb.AddForce(knockbackForce);
+        
+        if (other.tag == "Enemy") {
+            Enemy target = other.gameObject.GetComponent<Enemy>();
+
+            //deal damage
+            target.TakeDmg(1); //place holder
+
+            if (comboNum == 0) 
+            { // apply knockback
+                Vector2 knockbackForce = new Vector2(knockBack * 100 * this.transform.localScale.x, 0);
+                Rigidbody2D otherRb = other.gameObject.GetComponent<Rigidbody2D>();
+                otherRb.AddForce(knockbackForce);
+            }
         }
-        DealDamage(null, 10f); // placeholder
+
     }
 
     void OnMelee(InputValue movementValue)
@@ -69,7 +80,14 @@ public class PlayerComboTemp : MonoBehaviour
         float val = movementValue.Get<float>();
         if (val == 1) 
         {
-            isAttacking = true;
+            if (attackCoolDownCount <= 0) 
+            {
+                Debug.Log("combo: "+comboNum);
+                attackCoolDownCount = coolDown[comboNum];
+                resetCoolDownCount = comboResetCoolDown;
+                isAttacking = true;
+                comboNum = (comboNum + 1) % 3; //Will alternate comboNum between 0,1,2.
+            }
         }
 
     }
@@ -85,7 +103,7 @@ public class PlayerComboTemp : MonoBehaviour
         if (other.gameObject != this.gameObject) { //might want to use enemy tag
             if (isAttacking) 
             {
-                Debug.Log(other.gameObject);
+                // Debug.Log(other.gameObject);
 
                 FistCombo(other);
                 isAttacking = false;

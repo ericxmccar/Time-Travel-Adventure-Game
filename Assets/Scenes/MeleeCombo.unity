@@ -277,7 +277,7 @@ GameObject:
   - component: {fileID: 283967551}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -310,6 +310,7 @@ MonoBehaviour:
   maxHp: 1
   dmgOnTouch: 1
   drops: []
+  hasGravity: 0
 --- !u!50 &283967553
 Rigidbody2D:
   serializedVersion: 4
@@ -551,7 +552,7 @@ GameObject:
   - component: {fileID: 1642938301}
   m_Layer: 0
   m_Name: Enemy (1)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -581,9 +582,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6d7bcf5d923a42d7b59a767769dd1c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 1
+  maxHp: 10
   dmgOnTouch: 1
   drops: []
+  hasGravity: 1
 --- !u!50 &1642938303
 Rigidbody2D:
   serializedVersion: 4
@@ -673,7 +675,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -786,7 +788,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meleeHitBoxGameObject: {fileID: 380037223}
   knockBack: 50
-  comboResetCoolDown: 2
+  comboResetCoolDown: 3
   coolDown:
   - 0.1
   - 0.1
