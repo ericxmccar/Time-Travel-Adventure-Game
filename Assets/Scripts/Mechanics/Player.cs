@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
 
     #region Unity
     protected Rigidbody2D rb;
+    protected Animator animator;
+    protected SpriteRenderer sr;
     protected TimeReverse tr;
     protected SlowdownField sf;
     #endregion
@@ -57,6 +59,8 @@ public class Player : MonoBehaviour
         canJump = false;
 
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
         tr = GetComponent<TimeReverse>();
         sf = GetComponentInChildren<SlowdownField>();
         sf.gameObject.SetActive(false);
@@ -70,6 +74,13 @@ public class Player : MonoBehaviour
     void OnMove(InputValue movementValue)
     {
         movement = movementValue.Get<float>();
+        if (movement > 0) {
+            sr.flipX = true;
+        }
+        if (movement < 0) {
+            sr.flipX = false;
+        }
+        animator.SetFloat("Movement", Mathf.Abs(movement));
     }
 
     void OnDown(InputValue movementValue)
