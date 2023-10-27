@@ -9,7 +9,9 @@ public class Player : MonoBehaviour
     [SerializeField] protected int maxHp;
     [SerializeField] Item heldItem;
     [SerializeField] List<Item> inventory;
-    [SerializeField] int hp;
+    public int hp;
+    [SerializeField] protected int maxTimeMeter;
+    public int timeMeter;
     #endregion
 
     #region Player Movement
@@ -20,6 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField] protected float dashDuration;
     [SerializeField] protected float dashSpeed;
     [SerializeField] protected float dashCooldown;
+    [SerializeField] protected float slowdownDuration;
     float currentJumpVelocity;
     float movement;
     float dashY;
@@ -33,6 +36,7 @@ public class Player : MonoBehaviour
     #region Unity
     protected Rigidbody2D rb;
     protected TimeReverse tr;
+    protected SlowdownField sf;
     #endregion
 
     // Start is called before the first frame update
@@ -40,6 +44,7 @@ public class Player : MonoBehaviour
     {
         inventory = new List<Item>();
         hp = maxHp;
+        timeMeter = maxTimeMeter;
 
         currentJumpVelocity = initialJumpVelocity;
         jumpStep = initialJumpVelocity / maxJumpTime;
@@ -53,6 +58,8 @@ public class Player : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         tr = GetComponent<TimeReverse>();
+        sf = GetComponentInChildren<SlowdownField>();
+        sf.gameObject.SetActive(false);
     }
 
     void FixedUpdate()
@@ -116,7 +123,26 @@ public class Player : MonoBehaviour
 
     void OnReverse()
     {
-        tr.ReverseTrue();
+        if (timeMeter > 0)
+        {
+            timeMeter -= 1;
+            tr.ReverseTrue();
+        }
+    }
+
+    void OnSlowdown()
+    {
+        if (timeMeter > 0)
+        {
+            timeMeter -= 1;
+            sf.gameObject.SetActive(true);
+            Invoke("SlowdownOver", slowdownDuration);
+        }
+    }
+
+    void SlowdownOver()
+    {
+        sf.gameObject.SetActive(false);
     }
 
     void UpdateVelocity()

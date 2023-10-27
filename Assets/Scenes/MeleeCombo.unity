@@ -707,6 +707,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4415565720598428110, guid: 8c297265c4d774be6890af621b7f0205, type: 3}
+      propertyPath: posSize
+      value: 1200
+      objectReference: {fileID: 0}
     - target: {fileID: 5354835524312416230, guid: 8c297265c4d774be6890af621b7f0205, type: 3}
       propertyPath: m_FlipX
       value: 0
