@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class TimeReverse : MonoBehaviour
 {
-    [SerializeField] float seconds;
+    [SerializeField] int posSize;
     private List<Vector3> pos;
     private bool Reversing;
-    private float timer;
     private bool Reversed;
     private int index;
     // Start is called before the first frame update
@@ -15,26 +14,28 @@ public class TimeReverse : MonoBehaviour
     {
         pos = new List<Vector3>();
         Reversing = false;
-        timer = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (!Reversing) {
-        pos.Add(this.transform.position);
+            pos.Add(this.transform.position);
+            if (pos.Count > posSize) pos.RemoveAt(0);
         }
         else {
-            if (timer == seconds) {
-                 Reversing = false;
+            if (pos.Count > 0)
+            {
+                this.transform.position = pos[pos.Count - 1];
+                pos.RemoveAt(pos.Count - 1);
             }
-            index = pos.Count - 1;
-            this.transform.position = pos[index]; 
-            pos.RemoveAt(index);
-            timer += Time.deltaTime;
+            else
+            {
+                Reversing = false;
+            }
         }
     }
-    void ReverseTrue() {
+    public void ReverseTrue() {
         Reversing = true;
     }
 }

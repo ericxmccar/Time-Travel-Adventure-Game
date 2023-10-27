@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
 
     #region Unity
     protected Rigidbody2D rb;
+    protected TimeReverse tr;
     #endregion
 
     // Start is called before the first frame update
@@ -51,6 +52,7 @@ public class Player : MonoBehaviour
         canJump = false;
 
         rb = GetComponent<Rigidbody2D>();
+        tr = GetComponent<TimeReverse>();
     }
 
     void FixedUpdate()
@@ -110,6 +112,11 @@ public class Player : MonoBehaviour
                 Invoke("RestoreDash", dashCooldown);
             }
         }
+    }
+
+    void OnReverse()
+    {
+        tr.ReverseTrue();
     }
 
     void UpdateVelocity()

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5354835524312416226}
   - component: {fileID: 5354835524312416229}
   - component: {fileID: 5354835524312416228}
+  - component: {fileID: 4415565720598428110}
   m_Layer: 0
   m_Name: Player (Box)
   m_TagString: Untagged
@@ -156,8 +157,9 @@ MonoBehaviour:
   maxJumpTime: 30
   initialJumpVelocity: 10
   fallSpeedMultiplier: 2
-  dashDuration: 0.5
+  dashDuration: 0.1
   dashSpeed: 20
+  dashCooldown: 0
 --- !u!114 &5354835524312416228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,6 +190,19 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &4415565720598428110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5354835524312416233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b64c7b90b6bb3b47ae80317d936de64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  posSize: 600
 --- !u!1 &5354835525022972836
 GameObject:
   m_ObjectHideFlags: 0
