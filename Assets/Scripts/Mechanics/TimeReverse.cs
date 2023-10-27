@@ -16,7 +16,6 @@ public class TimeReverse : MonoBehaviour
         pos = new List<Vector3>();
         Reversing = false;
         timer = 0f;
-        Invoke("ReverseTrue", 10f);
     }
 
     // Update is called once per frame
