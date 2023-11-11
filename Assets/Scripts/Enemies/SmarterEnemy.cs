@@ -16,7 +16,7 @@ public class SmarterEnemy : Enemy
     }
     void FixedUpdate() {
         base.UpdateVelocity();
-        if (Mathf.Abs(player.transform.position.x - this.transform.position.x) < ActivationDistance) 
+        if (Vector3.Distance(player.transform.position, this.transform.position) < ActivationDistance) 
         {
             
             if (player.transform.position.x < this.transform.position.x) 
