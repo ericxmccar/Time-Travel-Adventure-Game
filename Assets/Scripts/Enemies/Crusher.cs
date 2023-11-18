@@ -7,6 +7,7 @@ public class Crusher : Enemy
     [SerializeField] float FallingVelocity;
     [SerializeField] float LiftingVelocity;
     [SerializeField] float ActivationDistance;
+    [SerializeField] float waitFor;
     [SerializeField] float Seconds;
     [SerializeField] GameObject platform;
     private float position;
@@ -36,7 +37,7 @@ public class Crusher : Enemy
             moveVelocity = Vector3.down * FallingVelocity;
         }
         if (this.transform.position.y < -1.2) {
-            Invoke("Up", 2.0f);
+            Invoke("Up", waitFor);
         }
         platform.transform.localPosition = platformOffset;
 

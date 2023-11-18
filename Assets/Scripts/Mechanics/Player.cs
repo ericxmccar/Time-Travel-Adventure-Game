@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -151,6 +152,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    void OnReset()
+    {
+        SceneManager.LoadScene("DemoLevel");
+    }
+
     void SlowdownOver()
     {
         sf.gameObject.SetActive(false);
@@ -244,6 +250,6 @@ public class Player : MonoBehaviour
 
     void Die()
     {
-        // TODO
+        SceneManager.LoadScene("GameOver");
     }
 }
